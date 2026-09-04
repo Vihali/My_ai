@@ -1,0 +1,18 @@
+name: Unzip My App
+on: [push]
+jobs:
+  unzip:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - name: Extract and Push
+        run: |
+          unzip -q -o *.zip
+          rm *.zip
+          git config user.name "GitHub Action"
+          git config user.email "action@github.com"
+          git add .
+          git commit -m "Extracted by Magic"
+          git push
