@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vishal.AI — Forever Edition</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0b0d10;--panel:#14181d;--panel2:#191e24;--line:#222831;--line2:#2c3440;--mist:#e9e6dd;--mist2:#8b93a1;--ember:#e8a33d;--ember2:#f2b558;--sage:#56b880;--danger:#e05f68;--violet:#a58fd4}
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:var(--ink);color:var(--mist);font-family:Manrope,sans-serif;height:100dvh;display:flex;flex-direction:column;overflow:hidden}
+header{display:flex;align-items:center;gap:10px;padding:12px 16px;border-bottom:1px solid var(--line);background:var(--panel)}
+.logo{color:var(--ember);font-size:20px}
+h1{font-family:"Space Grotesk",sans-serif;font-size:16px;font-weight:600;letter-spacing:-.01em}
+h1 span{color:var(--ember)}
+.tag{font-size:10px;color:var(--mist2);letter-spacing:.12em;text-transform:uppercase}
+.spacer{flex:1}
+.btn{background:var(--panel2);border:1px solid var(--line2);color:var(--mist2);border-radius:8px;padding:7px 12px;font-size:12px;font-weight:600;cursor:pointer;font-family:Manrope}
+.btn:hover{color:var(--mist);border-color:#3b4452}
+.btn.primary{background:var(--ember);color:var(--ink);border:none}
+.btn.primary:hover{background:var(--ember2)}
+main{flex:1;overflow-y:auto;padding:18px 14px}
+.wrap{max-width:760px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+.msg{display:flex;gap:10px;animation:rise .3s ease both}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1}}
+.msg.user{justify-content:flex-end}
+.avatar{color:var(--ember);margin-top:2px;flex-shrink:0}
+.bubble{background:var(--panel);border:1px solid var(--line);border-radius:14px;border-top-left-radius:4px;padding:10px 14px;max-width:88%;font-size:13.5px;line-height:1.65}
+.msg.user .bubble{background:rgba(232,163,61,.1);border-color:rgba(232,163,61,.25);border-radius:14px;border-bottom-right-radius:4px}
+.bubble h3,.bubble h4{font-family:"Space Grotesk";margin:.8em 0 .3em;font-size:14px}
+.bubble p{margin:.5em 0}
+.bubble ul,.bubble ol{margin:.5em 0 .5em 1.3em}
+.bubble li{margin:.25em 0}
+.bubble li::marker{color:var(--ember)}
+.bubble code{font-family:"JetBrains Mono",monospace;font-size:.85em;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);border-radius:5px;padding:.1em .35em;color:#f0d9ae}
+.bubble pre{background:#0c0f13;border:1px solid var(--line);border-radius:10px;padding:12px;overflow-x:auto;margin:.7em 0}
+.bubble pre code{background:none;border:none;padding:0;color:#d9e0ca;font-size:12px}
+.bubble table{border-collapse:collapse;margin:.7em 0;width:100%;font-size:12.5px}
+.bubble th{font-family:"Space Grotesk";text-align:left;color:var(--ember2);background:rgba(232,163,61,.07);padding:6px 10px;border-bottom:1px solid var(--line2)}
+.bubble td{padding:6px 10px;border-bottom:1px solid var(--line);color:#b7bdc8;vertical-align:top}
+.bubble blockquote{border-left:2px solid var(--ember);background:rgba(232,163,61,.06);padding:6px 12px;border-radius:0 8px 8px 0;margin:.6em 0}
+.bubble a{color:var(--ember2)}
+.artifact{margin-top:8px;border:1px solid rgba(165,143,212,.4);background:rgba(165,143,212,.1);border-radius:12px;padding:10px 12px}
+.artifact .row{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.artifact .title{font-weight:700;font-size:12.5px;min-width:0;flex:1}
+.artifact iframe{width:100%;height:440px;border:0;border-radius:10px;background:#fff;margin-top:8px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;max-width:760px;margin:0 auto 8px}
+.chip{border:1px solid var(--line2);background:var(--panel2);color:var(--mist2);border-radius:20px;padding:5px 12px;font-size:11.5px;cursor:pointer;font-family:Manrope}
+.chip:hover{color:var(--ember2);border-color:rgba(232,163,61,.5)}
+.composer{border-top:1px solid var(--line);background:var(--panel);padding:10px 14px 12px}
+.cbox{max-width:760px;margin:0 auto;display:flex;gap:8px;align-items:flex-end;border:1px solid var(--line2);background:var(--panel2);border-radius:12px;padding:8px;transition:border-color .2s}
+.cbox:focus-within{border-color:rgba(232,163,61,.6)}
+textarea{flex:1;background:none;border:none;color:var(--mist);font-family:Manrope;font-size:13.5px;resize:none;max-height:120px;outline:none;padding:6px 8px;line-height:1.5}
+.send{width:36px;height:36px;border-radius:10px;background:var(--ember);border:none;color:var(--ink);font-size:16px;cursor:pointer;flex-shrink:0}
+.send:disabled{opacity:.35;cursor:not-allowed}
+.note{text-align:center;font-size:10.5px;color:rgba(139,147,161,.8);margin-top:6px;max-width:760px;margin-left:auto;margin-right:auto}
+.dots{display:flex;gap:4px;padding:8px 0}
+.dots i{width:6px;height:6px;border-radius:50%;background:var(--ember);animation:p 1s infinite}
+.dots i:nth-child(2){animation-delay:.15s}.dots i:nth-child(3){animation-delay:.3s}
+@keyframes p{0%,100%{opacity:.25}50%{opacity:1;transform:translateY(-2px)}}
+dialog{background:var(--panel);color:var(--mist);border:1px solid var(--line2);border-radius:14px;padding:20px;max-width:520px;width:92%}
+dialog::backdrop{background:rgba(0,0,0,.6)}
+dialog h2{font-family:"Space Grotesk";font-size:15px;margin-bottom:4px}
+dialog .sub{font-size:12px;color:var(--mist2);margin-bottom:12px}
+.memrow{display:flex;gap:8px;align-items:center;border:1px solid var(--line);border-radius:10px;padding:8px 10px;margin-bottom:6px;font-size:12.5px}
+.memrow span{flex:1;min-width:0}
+.memrow button{background:none;border:none;color:var(--danger);cursor:pointer;font-size:13px}
+.addrow{display:flex;gap:6px;margin-top:10px}
+.addrow input{flex:1;background:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:8px 10px;color:var(--mist);font-family:Manrope;font-size:12.5px;outline:none}
+label{display:block;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--mist2);margin:14px 0 4px}
+input.key{width:100%;background:var(--ink);border:1px solid var(--line2);border-radius:8px;padding:8px 10px;color:var(--mist);font-family:"JetBrains Mono",monospace;font-size:12px;outline:none}
+.err{border:1px solid rgba(224,95,104,.4);background:rgba(224,95,104,.1);color:var(--danger);border-radius:10px;padding:8px 12px;font-size:12px;max-width:760px;margin:0 auto 8px}
+</style>
+</head>
+<body>
+<header>
+  <span class="logo">✦</span>
+  <div><h1>Vishal<span>.AI</span></h1><div class="tag">Forever Edition · no server needed</div></div>
+  <div class="spacer"></div>
+  <button class="btn" onclick="openMem()">🧠 Memory</button>
+  <button class="btn" onclick="openSet()">⚙️</button>
+  <button class="btn" onclick="newChat()">＋ New</button>
+</header>
+<main id="main"><div class="wrap" id="chat"></div></main>
+<div id="errbox"></div>
+<div class="chips" id="chips"></div>
+<div class="composer">
+  <div class="cbox">
+    <textarea id="inp" rows="1" placeholder="Ask anything — build games, plan, learn, talk · Enter to send"></textarea>
+    <button class="send" id="send" onclick="go()">➤</button>
+  </div>
+  <div class="note">Forever Edition: runs entirely in your browser with your own Gemini key. Memory &amp; chats are stored on this device only.</div>
+</div>
+
+<dialog id="memDlg">
+  <h2>Long-term memory</h2>
+  <div class="sub">Remembered across every conversation, on this device.</div>
+  <div id="memList"></div>
+  <div class="addrow"><input id="memInp" placeholder="Remember that…"><button class="btn primary" onclick="addMem()">Store</button></div>
+  <div style="margin-top:14px;text-align:right"><button class="btn" onclick="memDlg.close()">Done</button></div>
+</dialog>
+
+<dialog id="setDlg">
+  <h2>Settings</h2>
+  <div class="sub">Your Gemini key stays in this file/device. Get one free at aistudio.google.com</div>
+  <label>Google Gemini API key</label>
+  <input class="key" id="keyInp">
+  <label>Model</label>
+  <input class="key" id="modelInp" placeholder="gemini-flash-latest">
+  <div style="margin-top:14px;display:flex;gap:8px;justify-content:flex-end">
+    <button class="btn" onclick="setDlg.close()">Cancel</button>
+    <button class="btn primary" onclick="saveSet()">Save</button>
+  </div>
+</dialog>
+
+<script>
+const DEFAULT_KEY="AIzaSyBq3A1g-aAHJs1flbnK0vdyU3TZ9UYMt4s";
+const LS={hist:"vfa.hist",mem:"vfa.mem",key:"vfa.key",model:"vfa.model"};
+let hist=JSON.parse(localStorage.getItem(LS.hist)||"[]");
+let mem=JSON.parse(localStorage.getItem(LS.mem)||"[]");
+let busy=false;
+const $=id=>document.getElementById(id);
+const KEY=()=>localStorage.getItem(LS.key)||DEFAULT_KEY;
+const MODEL=()=>localStorage.getItem(LS.model)||"gemini-flash-latest";
+
+const CHIPS=["🎮 Make me a snake game","🔐 Generate a password","📋 Plan my week","🤝 Help me decide","💛 Hi, how are you?"];
+CHIPS.forEach(c=>{const b=document.createElement("button");b.className="chip";b.textContent=c;b.onclick=()=>{$("inp").value=c.slice(c.indexOf(" ")+1);go()};$("chips").appendChild(b)});
+
+function save(){localStorage.setItem(LS.hist,JSON.stringify(hist.slice(-60)))}
+function esc(s){return s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")}
+function inline(s){
+  return s.replace(/`([^`]+)`/g,"<code>$1</code>")
+    .replace(/\*\*([^*]+)\*\*/g,"<strong>$1</strong>")
+    .replace(/\*([^*\n]+)\*/g,"<em>$1</em>")
+    .replace(/\[([^\]]+)\]\((https?:[^)]+)\)/g,'<a href="$2" target="_blank" rel="noopener">$1</a>');
+}
+function md(src){
+  const blocks=[];
+  src=src.replace(/```(\w*)[^\n]*\n([\s\S]*?)```/g,(m,l,c)=>{blocks.push({l,c});return "\u0001"+(blocks.length-1)+"\u0001"});
+  const lines=esc(src).split("\n");let out=[],list=null,table=null;
+  const closeList=()=>{if(list){out.push("</"+list+">");list=null}};
+  const closeTable=()=>{if(table){out.push("</table>");table=null}};
+  for(let ln of lines){
+    const t=ln.trim();
+    if(t.startsWith("|")){
+      closeList();
+      const cells=t.replace(/^\||\|$/g,"").split("|").map(c=>inline(c.trim()));
+      if(cells.every(c=>/^:?-{2,}:?$/.test(c)))continue;
+      if(!table){table=1;out.push("<table>");out.push("<tr>"+cells.map(c=>"<th>"+c+"</th>").join("")+"</tr>")}
+      else out.push("<tr>"+cells.map(c=>"<td>"+c+"</td>").join("")+"</tr>");
+      continue;
+    } else closeTable();
+    let m;
+    if((m=t.match(/^(#{1,4})\s+(.*)/))){closeList();out.push("<h"+Math.min(m[1].length+2,4)+">"+inline(m[2])+"</h"+Math.min(m[1].length+2,4)+">")}
+    else if(/^(-{3,}|\*{3,})$/.test(t)){closeList();out.push("<hr>")}
+    else if(t.startsWith("&gt;")){closeList();out.push("<blockquote>"+inline(t.slice(4).trim())+"</blockquote>")}
+    else if((m=t.match(/^[-*•]\s+(.*)/))){if(list!=="ul"){closeList();out.push("<ul>");list="ul"}out.push("<li>"+inline(m[1])+"</li>")}
+    else if((m=t.match(/^\d+\.\s+(.*)/))){if(list!=="ol"){closeList();out.push("<ol>");list="ol"}out.push("<li>"+inline(m[1])+"</li>")}
+    else if(t===""){closeList()}
+    else{closeList();out.push("<p>"+inline(t)+"</p>")}
+  }
+  closeList();closeTable();
+  let html=out.join("\n");
+  html=html.replace(/\u0001(\d+)\u0001/g,(m,i)=>{const b=blocks[i];return "<pre><code>"+esc(b.c)+"</code></pre>"});
+  return html;
+}
+function extractArtifact(text){
+  const m=[...text.matchAll(/```(?:html)?[^\n]*\n([\s\S]*?)```/g)].find(f=>/<!doctype html|<html[\s>]/i.test(f[1]));
+  if(!m)return null;
+  const html=m[1];
+  const title=(html.match(/<title>\s*([^<]+?)\s*<\/title>/i)||[])[1]||"Interactive preview";
+  return {title,html};
+}
+function addMsg(role,text){
+  const w=$("chat");const d=document.createElement("div");d.className="msg"+(role==="user"?" user":"");
+  const art=role==="assistant"?extractArtifact(text):null;
+  const body=art?text.replace(/```(?:html)?[^\n]*\n[\s\S]*?```/g,"").trim():text;
+  d.innerHTML=role==="user"
+    ?'<div class="bubble">'+esc(text).replace(/\n/g,"<br>")+'</div>'
+    :'<div class="avatar">✦</div><div style="min-width:0;flex:1"><div class="bubble">'+md(body)+'</div><div class="art-slot"></div></div>';
+  if(art)renderArtifact(d.querySelector(".art-slot"),art);
+  w.appendChild(d);scrollBottom();return d;
+}
+function renderArtifact(slot,art){
+  const a=document.createElement("div");a.className="artifact";
+  a.innerHTML='<div class="row"><span>🎮</span><span class="title">'+esc(art.title)+' — built by Vishal.AI</span>'
+    +'<button class="btn primary run">▶ Run it</button></div>';
+  slot.appendChild(a);
+  a.querySelector(".run").onclick=e=>{
+    const btn=e.target;
+    let fr=a.querySelector("iframe");
+    if(fr){fr.remove();btn.textContent="▶ Run it";return}
+    fr=document.createElement("iframe");fr.sandbox="allow-scripts allow-pointer-lock";fr.srcdoc=art.html;
+    a.appendChild(fr);btn.textContent="Close";
+    const hint=document.createElement("div");hint.style.cssText="font-size:10.5px;color:var(--mist2);margin-top:4px";
+    hint.textContent="Click inside the preview so it captures keyboard controls.";a.appendChild(hint);
+  };
+}
+function scrollBottom(){$("main").scrollTop=$("main").scrollHeight}
+function typing(on){
+  let d=$("typing");
+  if(on&&!d){d=document.createElement("div");d.id="typing";d.className="msg";
+    d.innerHTML='<div class="avatar">✦</div><div class="bubble"><div class="dots"><i></i><i></i><i></i></div></div>';
+    $("chat").appendChild(d);scrollBottom()}
+  if(!on&&d)d.remove();
+}
+function showErr(t){$("errbox").innerHTML=t?'<div class="err">'+esc(t)+"</div>":""}
+
+const SEXUAL=/\b(sex|sexually|sexual|sexy|porn|porno|pornograph\w*|xxx|nsfw|nude|nudes|nudity|naked|onlyfans|blowjob|blow job|handjob|hand job|masturbat\w*|boob\w*|pussy|dick pic|penis|vagina|vulva|erotic\w*|sexting|cam ?girl|hentai|fetish\w*|orgasm\w*|incest|threesome)\b/i;
+const SEXUAL_BN=/(সেক্স|যৌন|পর্ন|চটি|হস্তমৈথুন)/;
+const DECLINE="That's outside my policy — I don't engage with sexual content. 🙏\n\nNo judgment, just a firm boundary. I'm happy to help with almost anything else: studies, work, plans, decisions, code, math, or just a good conversation.\n\nWhat would you like to do instead?";
+
+function sysPrompt(){
+  const mems=mem.length?"\nThings you remember about the user (use naturally, never recite):\n"+mem.map(m=>"- "+m).join("\n")+"\n":"";
+  return `You are Vishal.ai — a unified Personal Life Agent. ONE companion, one warm honest personality, many capabilities blended seamlessly.
+- Intelligent, warm, calm, gently playful. You are an AI — never claim to be human or invent physical experiences.
+- Match the user's language (English or বাংলা). Conversation first, helpful second.
+- Never fabricate facts, sources or results. If unsure, say so briefly and still be useful.
+- When asked to make a GAME, WEBSITE, TOOL or anything interactive: build ONE complete self-contained HTML document (all CSS/JS inline, no external dependencies) in a SINGLE \`\`\`html block. Make it polished and fully working (games must be playable end-to-end).
+- When asked to write code: deliver COMPLETE runnable code — never truncate, no placeholders. Use standard libraries, handle edge cases, and say how to run it.
+- Depth follows the user: "short answer" → concise; "explain deeply" → thorough.
+- For emotional messages: empathy + honesty before information.
+- Never produce sexual or explicit content; politely decline.${mems}`;
+}
+async function callGemini(turns){
+  const body={
+    systemInstruction:{parts:[{text:sysPrompt()}]},
+    contents:turns.map(t=>({role:t.role==="assistant"?"model":"user",parts:[{text:t.content}]})),
+    generationConfig:{temperature:.7,maxOutputTokens:4096,thinkingConfig:{thinkingBudget:0}}
+  };
+  let lastErr="Gemini error";
+  for(let withThink of [true,false]){
+    if(!withThink)delete body.generationConfig.thinkingConfig;
+    for(let attempt=1;attempt<=3;attempt++){
+      try{
+        const r=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(MODEL())}:generateContent?key=${encodeURIComponent(KEY())}`,{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify(body)});
+        const d=await r.json().catch(()=>null);
+        if(r.ok){
+          const txt=(d.candidates?.[0]?.content?.parts||[]).map(p=>p.text||"").join("").trim();
+          if(txt)return txt;
+          lastErr="Empty response";break;
+        }
+        lastErr=d?.error?.message||("Gemini error ("+r.status+")");
+        if(![429,500,503].includes(r.status))return {err:lastErr};
+        if(attempt<3)await new Promise(rs=>setTimeout(rs,1500*attempt));
+      }catch(e){lastErr="Network error: "+e.message;return {err:lastErr}}
+    }
+    if(!/think/i.test(lastErr))break;
+  }
+  return {err:lastErr};
+}
+async function go(){
+  if(busy)return;
+  const inp=$("inp");const text=inp.value.trim();if(!text)return;
+  inp.value="";showErr("");
+  hist.push({role:"user",content:text});save();addMsg("user",text);
+  // Local pocket tools + safety (instant, no API)
+  let reply=null;
+  if(SEXUAL.test(text)||SEXUAL_BN.test(text))reply=DECLINE;
+  else if(/\bpassword\b/i.test(text)&&/(generat|create|make|give|new|random|strong|secure)/i.test(text)){
+    const cs="ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$%^&*-_+=?";
+    const b=new Uint32Array(16);crypto.getRandomValues(b);let pw="";b.forEach(x=>pw+=cs[x%cs.length]);
+    reply="**🔐 Secure password (16 characters)**\n\n```\n"+pw+"\n```\n\nCryptographically random. Store it in a password manager — never reuse it.";
+  }
+  else if(/\b(flip|toss)\s+(?:a\s+)?coin\b/i.test(text))reply="The coin spins… and lands on **"+(Math.random()<.5?"Heads":"Tails")+"** 🪙";
+  else if(/\broll\s+(?:a\s+)?(?:dice|die)\b/i.test(text))reply="🎲 You rolled a **"+(1+Math.floor(Math.random()*6))+"**";
+  if(reply){hist.push({role:"assistant",content:reply});save();addMsg("assistant",reply);return}
+  busy=true;$("send").disabled=true;typing(true);
+  const res=await callGemini(hist.slice(-24));
+  typing(false);busy=false;$("send").disabled=false;
+  if(res.err){hist.pop();save();showErr("⚠️ "+res.err+( /key|permission|api/i.test(res.err)?" — check your key in ⚙️ Settings":""));return}
+  hist.push({role:"assistant",content:res});save();addMsg("assistant",res);
+}
+function newChat(){hist=[];save();$("chat").innerHTML="";showErr("");
+  addMsg("assistant","Hey! 👋 I'm Vishal.ai — your companion, forever edition.\n\nI live entirely in this file: ask me anything, make me build games, plan your week, or just talk. What's on your mind?")}
+function renderMems(){
+  const l=$("memList");l.innerHTML="";
+  if(!mem.length)l.innerHTML='<div style="font-size:12px;color:var(--mist2);padding:8px 0">No memories yet — add one below.</div>';
+  mem.forEach((m,i)=>{const r=document.createElement("div");r.className="memrow";
+    r.innerHTML="<span>"+esc(m)+"</span><button title='Forget'>✕</button>";
+    r.querySelector("button").onclick=()=>{mem.splice(i,1);localStorage.setItem(LS.mem,JSON.stringify(mem));renderMems()};
+    l.appendChild(r)});
+}
+function addMem(){const v=$("memInp").value.trim();if(!v)return;mem.push(v);localStorage.setItem(LS.mem,JSON.stringify(mem));$("memInp").value="";renderMems()}
+function openMem(){renderMems();$("memDlg").showModal()}
+function openSet(){$("keyInp").value=KEY();$("modelInp").value=MODEL();$("setDlg").showModal()}
+function saveSet(){const k=$("keyInp").value.trim();if(k)localStorage.setItem(LS.key,k);
+  const m=$("modelInp").value.trim();if(m)localStorage.setItem(LS.model,m);$("setDlg").close()}
+$("inp").addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();go()}});
+$("inp").addEventListener("input",e=>{e.target.style.height="auto";e.target.style.height=Math.min(120,e.target.scrollHeight)+"px"});
+if(hist.length)hist.forEach(m=>addMsg(m.role,m.content));else newChat();
+</script>
+</body>
+</html>

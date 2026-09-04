@@ -1,0 +1,10 @@
+import AppShell from "@/components/AppShell";
+import MemoryClient from "./MemoryClient";
+
+export default function MemoryPage() {
+  return (
+    <AppShell>
+      <MemoryClient />
+    </AppShell>
+  );
+}

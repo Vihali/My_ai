@@ -1,0 +1,13 @@
+import { Suspense } from "react";
+import AppShell from "@/components/AppShell";
+import ChatClient from "./ChatClient";
+
+export default function ChatPage() {
+  return (
+    <AppShell>
+      <Suspense fallback={<div className="p-8 text-mist-500">Loading console…</div>}>
+        <ChatClient />
+      </Suspense>
+    </AppShell>
+  );
+}
